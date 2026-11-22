@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Pago | Camino del Vino Colonense</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root { --primary: #635bff; --primary-hover: #5147e5; }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f6f9fc; color: #30313d; line-height: 1.5; -webkit-font-smoothing: antialiased; }
+  .hidden { display: none !important; }
+  .checkout-wrapper { display: flex; min-height: 100vh; }
+
+  .order-summary { flex: 0 0 45%; max-width: 45%; background: #fff; border-right: 1px solid #e3e8ee; display: flex; justify-content: flex-end; }
+  .order-summary-inner { width: 100%; max-width: 28.125rem; padding: 3rem 3rem 3rem 2rem; }
+  .back-link { display: inline-block; margin-bottom: 1.5rem; font-size: .875rem; font-weight: 500; color: #6d6e78; text-decoration: none; }
+  .back-link:hover { color: #30313d; }
+  .site-header { display: flex; align-items: center; gap: .625rem; margin-bottom: 2rem; }
+  .site-logo { width: 2rem; height: 2rem; border-radius: .375rem; background: #0d0d0f; color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: .875rem; }
+  .site-name { font-size: .9375rem; font-weight: 600; }
+  .total-label { font-size: .875rem; color: #6d6e78; margin-bottom: .25rem; }
+  .total-amount { font-size: 2.25rem; font-weight: 600; letter-spacing: -.02em; margin-bottom: 1.5rem; }
+  .order-items { border-top: 1px solid #e3e8ee; padding-top: 1.5rem; }
+  .order-item { display: flex; justify-content: space-between; align-items: flex-start; padding: .75rem 0; }
+  .order-item + .order-item { border-top: 1px solid #f0f2f5; }
+  .order-item-name { font-size: .875rem; font-weight: 500; }
+  .order-item-qty { font-size: .8125rem; color: #6d6e78; }
+  .order-item-price { font-size: .875rem; font-weight: 500; margin-left: 1rem; white-space: nowrap; }
+  .order-row-total { display: flex; justify-content: space-between; border-top: 1px solid #e3e8ee; margin-top: .5rem; padding-top: 1rem; font-weight: 600; }
+  .customer { margin-top: 1.5rem; font-size: .8125rem; color: #6d6e78; }
+
+  .payment-section { flex: 1; display: flex; justify-content: flex-start; }
+  .payment-section-inner { width: 100%; max-width: 28.125rem; padding: 3rem 2rem 3rem 3rem; }
+  .payment-title { font-size: 1.125rem; font-weight: 600; margin-bottom: 1.5rem; }
+  .methods { display: flex; flex-direction: column; gap: .75rem; margin-bottom: 1.5rem; }
+  .method { border: 1px solid #e3e8ee; border-radius: .5rem; padding: 1rem 1.125rem; cursor: pointer; background: #fff; transition: border-color .15s, box-shadow .15s; }
+  .method:hover { border-color: #c4c9d4; }
+  .method.selected { border-color: var(--primary); box-shadow: 0 0 0 1px var(--primary); }
+  .method label { display: flex; align-items: center; gap: .75rem; cursor: pointer; font-size: .9375rem; font-weight: 500; }
+  .method input[type="radio"] { width: 1.125rem; height: 1.125rem; accent-color: var(--primary); }
+  .method-desc { display: none; margin-top: .625rem; padding-left: 1.875rem; font-size: .8125rem; color: #6d6e78; }
+  .method.selected .method-desc { display: block; }
+  .btn { display: inline-block; width: 100%; padding: .875rem 1.5rem; background: var(--primary); color: #fff; border: 0; border-radius: .375rem; font: inherit; font-size: 1rem; font-weight: 600; text-align: center; text-decoration: none; cursor: pointer; transition: background-color .15s, opacity .15s; }
+  .btn:hover { background: var(--primary-hover); }
+  .btn:disabled { opacity: .5; cursor: not-allowed; background: var(--primary); }
+  .powered-by { text-align: center; margin-top: 2rem; font-size: .75rem; color: #8792a2; }
+  .state-box { text-align: center; padding: 3rem 1rem; }
+  .state-box h2 { font-size: 1.5rem; font-weight: 600; margin-bottom: 1rem; }
+  .state-box p { color: #6d6e78; margin-bottom: 1.5rem; }
+  .state-box .btn { width: auto; }
+  .order-number { display: inline-block; padding: .25rem .75rem; background: #eff6ff; color: #2563eb; border: 1px solid #bfdbfe; border-radius: 1rem; font-size: .8125rem; font-weight: 500; margin-bottom: 1rem; }
+
+  @media (max-width: 768px) {
+    .checkout-wrapper { flex-direction: column; }
+    .order-summary { flex: none; max-width: 100%; border-right: 0; border-bottom: 1px solid #e3e8ee; justify-content: center; }
+    .order-summary-inner, .payment-section-inner { max-width: 100%; padding: 1.5rem; }
+    .payment-section { justify-content: center; }
+    .total-amount { font-size: 1.75rem; }
+  }
+</style>
+</head>
+<body>
+<div class="checkout-wrapper">
+
+  <!-- Columna izquierda: resumen -->
+  <div class="order-summary">
+    <div class="order-summary-inner">
+      <a href="modalidades.html" class="back-link">&lsaquo; Volver a modalidades</a>
+      <div class="site-header">
+        <div class="site-logo">CV</div>
+        <div class="site-name">Camino del Vino Colonense</div>
+      </div>
+
+      <div id="resumen" class="hidden">
+        <div class="total-label">Total</div>
+        <div class="total-amount" id="totalHeader"></div>
+        <div class="order-items" id="orderItems"></div>
+        <div class="order-row-total"><span>Total</span><span id="totalFinal"></span></div>
+        <p class="customer" id="customer"></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Columna derecha: pago -->
+  <div class="payment-section">
+    <div class="payment-section-inner">
+
+      <!-- Sin selección -->
+      <div id="vacio" class="state-box hidden">
+        <h2>No hay una reserva en curso</h2>
+        <p>Elegí una modalidad y completá tus datos para continuar al pago.</p>
+        <a href="modalidades.html" class="btn">Ir a modalidades</a>
+      </div>
+
+      <!-- Método de pago -->
+      <div id="pago" class="hidden">
+        <div class="payment-title">Método de pago</div>
+        <div class="methods">
+          <div class="method" data-metodo="Transferencia bancaria">
+            <label><input type="radio" name="metodo" value="Transferencia bancaria"><span>Transferencia bancaria</span></label>
+            <div class="method-desc">Te enviamos por email los datos bancarios para completar el pago. La reserva se confirma al acreditarse.</div>
+          </div>
+          <div class="method" data-metodo="Coordinar por teléfono">
+            <label><input type="radio" name="metodo" value="Coordinar por teléfono"><span>Coordinar por teléfono</span></label>
+            <div class="method-desc">Te llamamos o te escribimos para acordar la seña y la forma de pago.</div>
+          </div>
+        </div>
+        <button type="button" class="btn" id="finalizar" disabled>Finalizar orden</button>
+        <div class="powered-by">Tu reserva se confirma por email</div>
+      </div>
+
+      <!-- Confirmación -->
+      <div id="confirmacion" class="state-box hidden">
+        <span class="order-number" id="numeroOrden"></span>
+        <h2>¡Recibimos tu reserva!</h2>
+        <p id="mensajeConfirmacion"></p>
+        <a href="../../../index.html" class="btn">Volver al inicio</a>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  var $ = function (id) { return document.getElementById(id); };
+  var fmt = function (n) { return '$' + n.toLocaleString('es-AR'); };
+
+  var datos = null;
+  try { datos = JSON.parse(sessionStorage.getItem('reservaCamino')); } catch (e) {}
+
+  var nombres = datos && datos.items ? Object.keys(datos.items) : [];
+  if (!nombres.length) {
+    $('vacio').classList.remove('hidden');
+    return;
+  }
+
+  // Resumen del pedido
+  var total = 0, cont = $('orderItems');
+  nombres.forEach(function (nombre) {
+    var it = datos.items[nombre];
+    var subtotal = it.precio * it.personas;
+    total += subtotal;
+
+    var fila = document.createElement('div');
+    fila.className = 'order-item';
+
+    var det = document.createElement('div');
+    var n = document.createElement('div');
+    n.className = 'order-item-name';
+    n.textContent = nombre;
+    var q = document.createElement('div');
+    q.className = 'order-item-qty';
+    q.textContent = it.personas + (it.personas === 1 ? ' persona' : ' personas') + ' × ' + fmt(it.precio);
+    det.appendChild(n); det.appendChild(q);
+
+    var p = document.createElement('div');
+    p.className = 'order-item-price';
+    p.textContent = fmt(subtotal);
+
+    fila.appendChild(det); fila.appendChild(p);
+    cont.appendChild(fila);
+  });
+  $('totalHeader').textContent = fmt(total);
+  $('totalFinal').textContent = fmt(total);
+
+  var c = datos.cliente || {};
+  var quien = ((c.nombre || '') + ' ' + (c.apellido || '')).trim();
+  if (quien || c.email) {
+    $('customer').textContent = 'Reserva a nombre de ' + (quien || 'sin nombre') + (c.email ? ' · ' + c.email : '');
+  }
+
+  $('resumen').classList.remove('hidden');
+  $('pago').classList.remove('hidden');
+
+  // Selección del método de pago
+  var metodos = document.querySelectorAll('.method');
+  function sincronizar() {
+    metodos.forEach(function (m) {
+      var r = m.querySelector('input');
+      m.classList.toggle('selected', r.checked);
+    });
+    $('finalizar').disabled = !document.querySelector('input[name="metodo"]:checked');
+  }
+  metodos.forEach(function (m) {
+    m.addEventListener('click', function () {
+      m.querySelector('input').checked = true;
+      sincronizar();
+    });
+  });
+
+  // Finalizar
+  $('finalizar').addEventListener('click', function () {
+    var metodo = document.querySelector('input[name="metodo"]:checked').value;
+    var numero = 'CV-' + Date.now().toString(36).toUpperCase();
+
+    $('numeroOrden').textContent = 'Orden ' + numero;
+    $('mensajeConfirmacion').textContent =
+      'Elegiste: ' + metodo + '. ' +
+      (c.email ? 'Te escribimos a ' + c.email : 'Te escribimos') +
+      ' para confirmar la fecha de salida, el punto de encuentro y el pago.';
+
+    $('resumen').classList.add('hidden');
+    $('pago').classList.add('hidden');
+    $('confirmacion').classList.remove('hidden');
+    try { sessionStorage.removeItem('reservaCamino'); } catch (e) {}
+  });
+})();
+</script>
+</body>
+</html>
