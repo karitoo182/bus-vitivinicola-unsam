@@ -1,0 +1,26 @@
+:root {
+    --primary-color: #7C3A49;
+    --primary-hover: #B58B97;
+    --secondary-color: #D3B8BC;
+    --accent-color: #6E2A3B;
+    --logo-subtitle-color: #502732;
+    --button-color: #C7A3AE;
+    --background-color: #F5EBE9;
+    --surface-color: #E7D5D5;
+    --footer-bg: #DCC7C9;
+    --text-color: #2A1018;
+    --text-muted: #6B4750;
+    --border-color: rgba(42, 16, 24, 0.12);
+    --glass-bg: rgba(245, 235, 233, 0.72);
+    --glass-border: rgba(110, 42, 59, 0.30);
+    --nav-bg: rgba(245, 235, 233, 0.78);
+    --field-bg: rgba(255, 255, 255, 0.6);
+    --sage-soft: rgba(110, 42, 59, 0.14);
+    --sage-dark: #5E2532;
+    --terracotta-soft: rgba(176, 135, 142, 0.22);
+    --shadow-soft: 0 22px 70px rgba(42, 16, 24, 0.10);
+    --shadow-button: 0 16px 36px rgba(110, 42, 59, 0.28);
+    --font-heading: 'Lora', serif;
+    --font-body: 'Montserrat', sans-serif;
+    --font-logo: 'Playfair Display', serif;
+}
